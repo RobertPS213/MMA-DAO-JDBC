@@ -14,7 +14,7 @@ public class Lutador {
 	public Lutador() {
 		
 	}
-	public Lutador(int id, String nome, Double peso, Integer vitorias, Integer derrotas, Integer empates,
+	public Lutador(Integer id, String nome, Double peso, Integer vitorias, Integer derrotas, Integer empates,
 			Categoria categoria) {
 		this.id = id;
 		this.nome = nome;

@@ -1,9 +1,16 @@
 package model.dao.impl;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
+import db.DB;
+import db.DbException;
 import model.dao.LutadorDao;
+import model.entities.Categoria;
 import model.entities.Lutador;
 
 public class LutadorDaoJDBC implements LutadorDao{
@@ -14,7 +21,34 @@ public class LutadorDaoJDBC implements LutadorDao{
 	}
 	@Override
 	public void insert(Lutador lutador) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+					"INSERT INTO lutador " 
+					+ "(Nome, Peso, Vitorias, Derrotas, Empates, CategoriaId) "
+				    + "VALUES (?, ?, ?, ?, ?, ?)",
+				    Statement.RETURN_GENERATED_KEYS);
+			st.setString(1, lutador.getNome());
+			st.setDouble(2, lutador.getPeso());
+			st.setInt(3, lutador.getVitorias());
+			st.setInt(4, lutador.getDerrotas());
+			st.setInt(5, lutador.getEmpates());
+			st.setInt(6, lutador.getCategoria().getId());
+			int linhasAfetadas = st.executeUpdate();
+			if(linhasAfetadas > 0) {
+				System.out.println("Linhas afetadas: " + linhasAfetadas);
+				ResultSet rs = st.getGeneratedKeys();
+				if(rs.next()) {
+					int id = rs.getInt(1);
+					lutador.setId(id);
+				}
+				DB.closeResult(rs);
+			}
+		} catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+		}
 	}
 	@Override
 	public void delete(Integer id) {
@@ -31,6 +65,11 @@ public class LutadorDaoJDBC implements LutadorDao{
 	}
 	@Override
 	public List<Lutador> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Lutador> findByCategoria(Categoria categoria) {
 		// TODO Auto-generated method stub
 		return null;
 	}
