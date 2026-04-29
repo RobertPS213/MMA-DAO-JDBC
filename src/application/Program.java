@@ -1,15 +1,24 @@
 package application;
 
+import model.dao.CategoriaDao;
 import model.dao.DaoFactory;
 import model.dao.LutadorDao;
-import model.entities.Categoria;
 import model.entities.Lutador;
 
 public class Program {
 	public static void main(String[] args) {
+		
+		System.out.println("--- MÉTODO: INSERT ---");
+		
 		LutadorDao ld = DaoFactory.createLutadorDao();
-		Categoria categoria = new Categoria(1, "Peso pesado");
+		CategoriaDao cd = DaoFactory.createCategoriaDao();
+		/*Categoria categoria = new Categoria(1, "Peso pesado");
 		Lutador lutador = new Lutador(null, "Mike Tyson", 98.0, 50, 6, 0, categoria);
+		ld.insert(lutador);*/
+		
+		System.out.println("--- MÉTODO: INSERT USANDO O FINDBYID DA CATEGORIA ---");
+		
+		Lutador lutador = new Lutador(null, "Lennox Lewis", 116.0, 41, 2, 1, cd.findById(1));
 		ld.insert(lutador);
 	}
 }
