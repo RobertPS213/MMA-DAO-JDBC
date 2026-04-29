@@ -52,7 +52,23 @@ public class LutadorDaoJDBC implements LutadorDao{
 	}
 	@Override
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement("DELETE FROM lutador WHERE Id = ?;");
+			st.setInt(1, id);
+			int linhasAfetadas = st.executeUpdate();
+			if(linhasAfetadas > 0) {
+				System.out.println("Lutador com ID " + id + " deletado com sucesso!");
+			} else {
+				System.out.println("Nenhum lutador encontrado com o ID " + id);
+			}
+		} catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+			DB.closeResult(rs);
+		}
 	}
 	@Override
 	public void update(Lutador lutador) {

@@ -18,7 +18,10 @@ public class Program {
 		
 		System.out.println("--- MÉTODO: INSERT USANDO O FINDBYID DA CATEGORIA ---");
 		
-		Lutador lutador = new Lutador(null, "Lennox Lewis", 116.0, 41, 2, 1, cd.findById(1));
-		ld.insert(lutador);
+		/*Lutador lutador = new Lutador(null, "Lennox Lewis", 116.0, 41, 2, 1, cd.findById(1));
+		ld.insert(lutador);*/
+		
+		System.out.println("--- MÉTODO: DELETE(LUTADOR) ---");
+		ld.delete(4);
 	}
 }
