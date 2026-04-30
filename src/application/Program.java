@@ -44,5 +44,28 @@ public class Program {
 		
 		/*System.out.println(ld.findByCategoria(cd.findById(1)));*/
 		/*System.out.println(ld.findByCategoria(cd.findById(1)));*/
+		
+		System.out.println("--- ----");
+		
+		System.out.println("--- MÉTODO: INSERT(CATEGORIA) ---");
+		
+		/*Categoria categoria = new Categoria(null, "Peso galo");
+		cd.insert(categoria);*/
+		
+		System.out.println("--- MÉTODO: DELETE(CATEGORIA) ---");
+		
+		cd.delete(2);
+		
+		System.out.println("--- MÉTODO: UPDATE(CATEGORIA) ---");
+		
+		/*cd.update(new Categoria(6, "Peso galo"));*/
+		
+		System.out.println("--- MÉTODO: FINDBYID(CATEGORIA) ---");
+		
+		/*System.out.println(cd.findById(2));*/
+		
+		System.out.println("--- MÉTODO: FINDALL(CATEGORIA) ---");
+		
+		/*System.out.println(cd.findAll());*/
 	}
 }
