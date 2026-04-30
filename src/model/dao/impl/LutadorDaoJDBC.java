@@ -164,7 +164,35 @@ public class LutadorDaoJDBC implements LutadorDao{
 	}
 	@Override
 	public List<Lutador> findByCategoria(Categoria categoria) {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT lutador.*, categoria.Nome as CatNome "
+					+ "FROM lutador INNER JOIN categoria "
+					+ "ON lutador.CategoriaId = categoria.Id "
+					+ "WHERE CategoriaId = ? "
+					+ "ORDER BY Nome");
+			st.setInt(1, categoria.getId());
+			rs = st.executeQuery();
+			List<Lutador> list = new ArrayList<>();
+			while(rs.next()) {
+				Lutador lutador = new Lutador();
+				lutador.setId(rs.getInt("Id"));
+				lutador.setNome(rs.getString("Nome"));
+				lutador.setPeso(rs.getDouble("Peso"));
+				lutador.setVitorias(rs.getInt("Vitorias"));
+				lutador.setDerrotas(rs.getInt("Derrotas"));
+				lutador.setEmpates(rs.getInt("Empates"));
+				lutador.setCategoria(categoria);
+				list.add(lutador);
+			}
+			return list;
+		} catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+			DB.closeResult(rs);
+		}
 	}
 }

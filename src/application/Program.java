@@ -39,5 +39,10 @@ public class Program {
 		System.out.println("--- MÉTODO: FINDALL(LUTADOR) ---");
 		
 		/*System.out.println(ld.findAll());*/
+		
+		System.out.println("--- MÉTODO: FINDYCATEGORIA(LUTADOR) ---");
+		
+		/*System.out.println(ld.findByCategoria(cd.findById(1)));
+		System.out.println(ld.findByCategoria(cd.findById(1)));*/
 	}
 }
