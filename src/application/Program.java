@@ -34,7 +34,7 @@ public class Program {
 		
 		System.out.println("--- MÉTODO> FINDBYID(LUTADOR) ---");
 		
-		/*System.out.println(ld.findById(5));*/
+		/*System.out.println(ld.findById(9));*/
 		
 		System.out.println("--- MÉTODO: FINDALL(LUTADOR) ---");
 		
@@ -42,7 +42,7 @@ public class Program {
 		
 		System.out.println("--- MÉTODO: FINDYCATEGORIA(LUTADOR) ---");
 		
-		/*System.out.println(ld.findByCategoria(cd.findById(1)));
-		System.out.println(ld.findByCategoria(cd.findById(1)));*/
+		/*System.out.println(ld.findByCategoria(cd.findById(1)));*/
+		/*System.out.println(ld.findByCategoria(cd.findById(1)));*/
 	}
 }

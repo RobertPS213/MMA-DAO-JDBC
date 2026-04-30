@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import db.DB;
 import db.DbException;
@@ -107,18 +109,7 @@ public class LutadorDaoJDBC implements LutadorDao{
 			st.setInt(1, id);
 			rs = st.executeQuery();
 			if(rs.next()) {
-				Categoria categoria = new Categoria();
-				categoria.setId(rs.getInt("CategoriaId"));
-				categoria.setNome(rs.getString("CatNome"));
-				Lutador lutador = new Lutador();
-				lutador.setId(rs.getInt("Id"));
-				lutador.setNome(rs.getString("Nome"));
-				lutador.setPeso(rs.getDouble("Peso"));
-				lutador.setVitorias(rs.getInt("Vitorias"));
-				lutador.setDerrotas(rs.getInt("Derrotas"));
-				lutador.setEmpates(rs.getInt("Empates"));
-				lutador.setCategoria(categoria);
-				return lutador;
+				return compactarLutador(rs, compactarCategoria(rs));
 			}
 			return null;
 		} catch(SQLException e) {
@@ -140,19 +131,14 @@ public class LutadorDaoJDBC implements LutadorDao{
 					+ "ORDER BY Nome");
 			rs = st.executeQuery();
 			List<Lutador> list = new ArrayList<>();
+			Map<Integer, Categoria> map = new HashMap<>();
 			while(rs.next()) {
-				Categoria categoria = new Categoria();
-				categoria.setId(rs.getInt("CategoriaId"));
-				categoria.setNome(rs.getString("CatNome"));
-				Lutador lutador = new Lutador();
-				lutador.setId(rs.getInt("Id"));
-				lutador.setNome(rs.getString("Nome"));
-				lutador.setPeso(rs.getDouble("Peso"));
-				lutador.setVitorias(rs.getInt("Vitorias"));
-				lutador.setDerrotas(rs.getInt("Derrotas"));
-				lutador.setEmpates(rs.getInt("Empates"));
-				lutador.setCategoria(categoria);
-				list.add(lutador);
+				Categoria cat = map.get(rs.getInt("CategoriaId"));
+				if(cat == null) {
+					cat = compactarCategoria(rs);
+					map.put(rs.getInt("CategoriaId"), cat);
+				}
+				list.add(compactarLutador(rs, cat));
 			}
 			return list;
 		} catch(SQLException e) {
@@ -177,15 +163,7 @@ public class LutadorDaoJDBC implements LutadorDao{
 			rs = st.executeQuery();
 			List<Lutador> list = new ArrayList<>();
 			while(rs.next()) {
-				Lutador lutador = new Lutador();
-				lutador.setId(rs.getInt("Id"));
-				lutador.setNome(rs.getString("Nome"));
-				lutador.setPeso(rs.getDouble("Peso"));
-				lutador.setVitorias(rs.getInt("Vitorias"));
-				lutador.setDerrotas(rs.getInt("Derrotas"));
-				lutador.setEmpates(rs.getInt("Empates"));
-				lutador.setCategoria(categoria);
-				list.add(lutador);
+				list.add(compactarLutador(rs, categoria));
 			}
 			return list;
 		} catch(SQLException e) {
@@ -194,5 +172,22 @@ public class LutadorDaoJDBC implements LutadorDao{
 			DB.closeStatement(st);
 			DB.closeResult(rs);
 		}
+	}
+	public Categoria compactarCategoria(ResultSet rs) throws SQLException{
+		Categoria categoria = new Categoria();
+		categoria.setId(rs.getInt("CategoriaId"));
+		categoria.setNome(rs.getString("CatNome"));
+		return categoria;
+	}
+	public Lutador compactarLutador(ResultSet rs, Categoria categoria) throws SQLException {
+		Lutador lutador = new Lutador();
+		lutador.setId(rs.getInt("Id"));
+		lutador.setNome(rs.getString("Nome"));
+		lutador.setPeso(rs.getDouble("Peso"));
+		lutador.setVitorias(rs.getInt("Vitorias"));
+		lutador.setDerrotas(rs.getInt("Derrotas"));
+		lutador.setEmpates(rs.getInt("Empates"));
+		lutador.setCategoria(categoria);
+		return lutador;
 	}
 }
