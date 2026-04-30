@@ -53,7 +53,6 @@ public class LutadorDaoJDBC implements LutadorDao{
 	@Override
 	public void delete(Integer id) {
 		PreparedStatement st = null;
-		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement("DELETE FROM lutador WHERE Id = ?;");
 			st.setInt(1, id);
@@ -67,12 +66,32 @@ public class LutadorDaoJDBC implements LutadorDao{
 			throw new DbException(e.getMessage());
 		} finally {
 			DB.closeStatement(st);
-			DB.closeResult(rs);
 		}
 	}
 	@Override
 	public void update(Lutador lutador) {
-		// TODO Auto-generated method stub	
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+					"UPDATE lutador "
+					+ "SET Nome = ?, Peso = ?, Vitorias = ?, Derrotas = ?, Empates = ?, CategoriaId = ? "
+					+ "WHERE Id = ?");
+			st.setString(1, lutador.getNome());
+			st.setDouble(2, lutador.getPeso());
+			st.setInt(3, lutador.getVitorias());
+			st.setInt(4, lutador.getDerrotas());
+			st.setInt(5, lutador.getEmpates());
+			st.setInt(6, lutador.getCategoria().getId());
+			st.setInt(7, lutador.getId());
+			int linhasAfetadas = st.executeUpdate();
+			if(linhasAfetadas > 0) {
+				System.out.println("Lutador com o id " + lutador.getId() + " teve seus dados alterados");
+			}
+		} catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+		}
 	}
 	@Override
 	public Lutador findById(Integer id) {

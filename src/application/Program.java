@@ -3,6 +3,7 @@ package application;
 import model.dao.CategoriaDao;
 import model.dao.DaoFactory;
 import model.dao.LutadorDao;
+import model.entities.Categoria;
 import model.entities.Lutador;
 
 public class Program {
@@ -22,6 +23,13 @@ public class Program {
 		ld.insert(lutador);*/
 		
 		System.out.println("--- MÉTODO: DELETE(LUTADOR) ---");
-		ld.delete(4);
+		
+		/*ld.delete(4);*/
+		
+		System.out.println("--- MÉTODO: UPDATE(LUTADOR) ---");
+		
+		/*Categoria categoria = new Categoria(2, "Peso leve");*/
+		Lutador lutador = new Lutador(5, "Gervonta Davis", 62.5, 30, 0, 1, cd.findById(2));
+		ld.update(lutador);
 	}
 }
