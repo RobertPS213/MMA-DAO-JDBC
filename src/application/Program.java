@@ -29,7 +29,15 @@ public class Program {
 		System.out.println("--- MÉTODO: UPDATE(LUTADOR) ---");
 		
 		/*Categoria categoria = new Categoria(2, "Peso leve");*/
-		Lutador lutador = new Lutador(5, "Gervonta Davis", 62.5, 30, 0, 1, cd.findById(2));
-		ld.update(lutador);
+		/*Lutador lutador = new Lutador(5, "Gervonta Davis", 62.5, 30, 0, 1, cd.findById(2));
+		ld.update(lutador);*/
+		
+		System.out.println("--- MÉTODO> FINDBYID(LUTADOR) ---");
+		
+		/*System.out.println(ld.findById(5));*/
+		
+		System.out.println("--- MÉTODO: FINDALL(LUTADOR) ---");
+		
+		/*System.out.println(ld.findAll());*/
 	}
 }

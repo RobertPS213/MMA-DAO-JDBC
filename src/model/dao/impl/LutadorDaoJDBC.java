@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import db.DB;
@@ -95,13 +96,71 @@ public class LutadorDaoJDBC implements LutadorDao{
 	}
 	@Override
 	public Lutador findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st= conn.prepareStatement(
+					"SELECT lutador.*, categoria.Nome as CatNome "
+					+ "FROM lutador INNER JOIN categoria "
+					+ "ON lutador.CategoriaId = categoria.Id "
+					+ "WHERE lutador.Id = ?");
+			st.setInt(1, id);
+			rs = st.executeQuery();
+			if(rs.next()) {
+				Categoria categoria = new Categoria();
+				categoria.setId(rs.getInt("CategoriaId"));
+				categoria.setNome(rs.getString("CatNome"));
+				Lutador lutador = new Lutador();
+				lutador.setId(rs.getInt("Id"));
+				lutador.setNome(rs.getString("Nome"));
+				lutador.setPeso(rs.getDouble("Peso"));
+				lutador.setVitorias(rs.getInt("Vitorias"));
+				lutador.setDerrotas(rs.getInt("Derrotas"));
+				lutador.setEmpates(rs.getInt("Empates"));
+				lutador.setCategoria(categoria);
+				return lutador;
+			}
+			return null;
+		} catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+			DB.closeResult(rs);
+		}
 	}
 	@Override
 	public List<Lutador> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT lutador.*, categoria.Nome as CatNome "
+					+ "FROM lutador INNER JOIN categoria "
+					+ "ON lutador.CategoriaId = categoria.Id "
+					+ "ORDER BY Nome");
+			rs = st.executeQuery();
+			List<Lutador> list = new ArrayList<>();
+			while(rs.next()) {
+				Categoria categoria = new Categoria();
+				categoria.setId(rs.getInt("CategoriaId"));
+				categoria.setNome(rs.getString("CatNome"));
+				Lutador lutador = new Lutador();
+				lutador.setId(rs.getInt("Id"));
+				lutador.setNome(rs.getString("Nome"));
+				lutador.setPeso(rs.getDouble("Peso"));
+				lutador.setVitorias(rs.getInt("Vitorias"));
+				lutador.setDerrotas(rs.getInt("Derrotas"));
+				lutador.setEmpates(rs.getInt("Empates"));
+				lutador.setCategoria(categoria);
+				list.add(lutador);
+			}
+			return list;
+		} catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+			DB.closeResult(rs);
+		}
 	}
 	@Override
 	public List<Lutador> findByCategoria(Categoria categoria) {
