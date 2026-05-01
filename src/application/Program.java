@@ -64,6 +64,7 @@ public class Program {
 					System.out.println("4 - ENCONTRAR UM LUTADOR PELO SEU ID");
 					System.out.println("5 - LISTAR TODOS OS LUTADORES");
 					System.out.println("6 - LISTAR TODOS OS LUTADORES PELA SUA CATEGORIA");
+					System.out.println("7 - VOLTAR");
 					System.out.print("SELECIONE UMA OPÇÃO: ");
 					int prosseguirLutador = sc.nextInt();
 					List<Categoria> list = categoriaDao.findAll();
@@ -110,7 +111,7 @@ public class Program {
 						System.out.println();
 						System.out.println("--- LISTAR TODOS OS LUTADORES ---");
 						program.printarLutadores(lutadorDao.findAll());
-					} else {
+					} else if(prosseguirLutador == 6) {
 						System.out.println();
 						System.out.println("--- CATEGORIAS DE PESO ---");
 						listMap.forEach((chave, valor) -> System.out.println(valor + " [" + chave + "]"));
@@ -123,7 +124,9 @@ public class Program {
 						} else {
 							program.printarLutadores(lutadorDao.findByCategoria(categoriaDao.findById(Idcategoria)));
 						}
-					}
+					} else if(prosseguirLutador == 7) {
+					} else {
+						System.out.println("\nNúmero invalido!");					}
 				} else if(prosseguirPrincipal == 2) {
 					System.out.println("");
 					System.out.println("[OPÇÕES]");
@@ -132,6 +135,7 @@ public class Program {
 					System.out.println("3 - ATUALIZAR UMA CATEGORIA");
 					System.out.println("4 - ENCONTRAR UMA CATEGORIA PELO ID");
 					System.out.println("5 - LISTAR TODAS AS CATEGORIAS");
+					System.out.println("6 - VOLTAR");
 					System.out.print("SELECIONE UMA OPÇÃO: ");
 					int prosseguirCategoria = sc.nextInt();
 					List<Categoria> list = categoriaDao.findAll();
@@ -173,11 +177,13 @@ public class Program {
 						int idCategoria = sc.nextInt();
 						List<Categoria> listCategoria = Arrays.asList(categoriaDao.findById(idCategoria));
 						program.printarCategorias(listCategoria);
-					} else {
+					} else if(prosseguirCategoria == 5) {
 						System.out.println();
 						System.out.println("--- LISTAR TODAS AS CATEGORIAS ---");
 						program.printarCategorias(categoriaDao.findAll());
-					}
+					} else if(prosseguirCategoria == 6) {
+					} else {
+						System.out.println("\nNúmero invalido!");					}
 				}
 			}
 		} catch (DbIntegrityException e) {
