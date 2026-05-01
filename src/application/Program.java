@@ -37,6 +37,9 @@ public class Program {
 	public void printarLutadores(List<Lutador> list){
 		list.forEach(x -> System.out.println("----------" + "\nId: " + x.getId() + "\nNome: " + x.getNome() + "\nPeso: " + x.getPeso() + "\nVitórias: " + x.getVitorias() + "\nDerrotas: " + x.getDerrotas() + "\nEmpates: " + x.getEmpates() + "\nCategoria de peso: " + x.getCategoria().getNome() + "\n----------"));
 	}
+	public void printarCategorias(List<Categoria> list) {
+		list.forEach(x -> System.out.println("----------" + "\nId: " + x.getId() + "\nNome: " + x.getNome() + "\n----------"));
+	}
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.US);
 		CategoriaDao categoriaDao = DaoFactory.createCategoriaDao();
@@ -106,8 +109,7 @@ public class Program {
 					} else if(prosseguirLutador == 5) {
 						System.out.println();
 						System.out.println("--- LISTAR TODOS OS LUTADORES ---");
-						List<Lutador> listLutadores = lutadorDao.findAll();
-						program.printarLutadores(listLutadores);
+						program.printarLutadores(lutadorDao.findAll());
 					} else {
 						System.out.println();
 						System.out.println("--- CATEGORIAS DE PESO ---");
@@ -121,6 +123,60 @@ public class Program {
 						} else {
 							program.printarLutadores(lutadorDao.findByCategoria(categoriaDao.findById(Idcategoria)));
 						}
+					}
+				} else {
+					System.out.println("");
+					System.out.println("[OPÇÕES]");
+					System.out.println("1 - INSERIR UMA NOVA CATEGORIA");
+					System.out.println("2 - DELETAR UMA CATEGORIA");
+					System.out.println("3 - ATUALIZAR UMA CATEGORIA");
+					System.out.println("4 - ENCONTRAR UMA CATEGORIA PELO ID");
+					System.out.println("5 - LISTAR TODAS AS CATEGORIAS");
+					System.out.print("SELECIONE UMA OPÇÃO: ");
+					int prosseguirCategoria = sc.nextInt();
+					List<Categoria> list = categoriaDao.findAll();
+					Map<Integer, String> listMap = new HashMap<>();
+					for(Categoria c: list) {
+						listMap.put(c.getId(), c.getNome());
+					}
+					Program program = new Program();
+					if(prosseguirCategoria == 1) {
+						sc.nextLine();
+						System.out.println();
+						System.out.println("--- INSERIR UMA NOVA CATEGORIA ---");
+						System.out.print("NOME: ");
+						String nome = sc.nextLine();
+						Categoria categoria = new Categoria(null, nome);
+						categoriaDao.insert(categoria);
+					} else if(prosseguirCategoria == 2) {
+						System.out.println();
+						System.out.println("--- CATEGORIAS DE PESO ---");
+						listMap.forEach((chave, valor) -> System.out.println(valor + " [" + chave + "]"));
+						System.out.println("--- DELETAR UMA CATEGORIA ---");
+						System.out.print("ID DA CATEGORIA: ");
+						int idCategoria = sc.nextInt();
+						categoriaDao.delete(idCategoria);
+					} else if(prosseguirCategoria == 3) {
+						System.out.println();
+						System.out.println("--- ATUALIZAR UMA CATEGORIA ---");
+						System.out.print("ID DA CATEGORIA: ");
+						int idCategoria = sc.nextInt();
+						sc.nextLine();
+						System.out.print("NOVO NOME DA CATEGORIA: ");
+						String nome = sc.nextLine();
+						Categoria categoria = new Categoria(idCategoria, nome);
+						categoriaDao.update(categoria);
+					} else if(prosseguirCategoria == 4) {
+						System.out.println();
+						System.out.println("--- ENCONTRAR UMA CATEGORIA PELO ID ---");
+						System.out.print("ID DA CATEGORIA: ");
+						int idCategoria = sc.nextInt();
+						List<Categoria> listCategoria = Arrays.asList(categoriaDao.findById(idCategoria));
+						program.printarCategorias(listCategoria);
+					} else {
+						System.out.println();
+						System.out.println("--- LISTAR TODAS AS CATEGORIAS ---");
+						program.printarCategorias(categoriaDao.findAll());
 					}
 				}
 			}

@@ -31,11 +31,11 @@ public class CategoriaDaoJDBC implements CategoriaDao{
 			st.setString(1, categoria.getNome());
 			int linhasAfetadas = st.executeUpdate();
 			if(linhasAfetadas > 0) {
-				System.out.println("Linhas afetadas: " + linhasAfetadas);
 				ResultSet rs = st.getGeneratedKeys();
 				if(rs.next()) {
 					categoria.setId(rs.getInt(1));
 				}
+				System.out.println("\n\nCategoria adicionado com sucesso!\nId da categoria: " + categoria.getId() + "");
 				DB.closeResult(rs);
 			}
 		} catch(SQLException e){
@@ -69,7 +69,7 @@ public class CategoriaDaoJDBC implements CategoriaDao{
 			st.setInt(2, categoria.getId());
 			int linhasAfetadas = st.executeUpdate();
 			if(linhasAfetadas > 0) {
-				System.out.println("Categoria com o id " + categoria.getId() + " foi atualizado com sucesso!");
+				System.out.println("\nCategoria com o id " + categoria.getId() + " foi atualizado com sucesso!");
 			}
 		} catch(SQLException e) {
 			throw new DbException(e.getMessage());
