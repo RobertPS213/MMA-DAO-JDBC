@@ -52,7 +52,7 @@ public class CategoriaDaoJDBC implements CategoriaDao{
 			st.setInt(1, id);
 			int linhasAfetadas = st.executeUpdate();
 			if(linhasAfetadas > 0) {
-				System.out.println("Categoria com o id " + id + " deletado com sucesso");
+				System.out.println("\nCategoria com o id " + id + " deletado com sucesso");
 			}
 		} catch(SQLException e) {
 			throw new DbException(e.getMessage());

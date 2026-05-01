@@ -124,7 +124,7 @@ public class Program {
 							program.printarLutadores(lutadorDao.findByCategoria(categoriaDao.findById(Idcategoria)));
 						}
 					}
-				} else {
+				} else if(prosseguirPrincipal == 2) {
 					System.out.println("");
 					System.out.println("[OPÇÕES]");
 					System.out.println("1 - INSERIR UMA NOVA CATEGORIA");
