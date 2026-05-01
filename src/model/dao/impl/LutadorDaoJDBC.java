@@ -39,12 +39,13 @@ public class LutadorDaoJDBC implements LutadorDao{
 			st.setInt(6, lutador.getCategoria().getId());
 			int linhasAfetadas = st.executeUpdate();
 			if(linhasAfetadas > 0) {
-				System.out.println("Linhas afetadas: " + linhasAfetadas);
 				ResultSet rs = st.getGeneratedKeys();
+				int id = 0;
 				if(rs.next()) {
-					int id = rs.getInt(1);
+					id = rs.getInt(1);
 					lutador.setId(id);
 				}
+				System.out.println("\nLutador adicionado com sucesso!\nId do lutador: " + id + "");
 				DB.closeResult(rs);
 			}
 		} catch(SQLException e) {

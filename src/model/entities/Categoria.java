@@ -2,7 +2,7 @@ package model.entities;
 
 import java.util.Objects;
 
-public class Categoria {
+public class Categoria{
 	private Integer id;
 	private String nome;
 	
