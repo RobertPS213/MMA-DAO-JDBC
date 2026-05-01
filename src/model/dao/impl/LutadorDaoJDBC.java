@@ -62,7 +62,7 @@ public class LutadorDaoJDBC implements LutadorDao{
 			st.setInt(1, id);
 			int linhasAfetadas = st.executeUpdate();
 			if(linhasAfetadas > 0) {
-				System.out.println("Lutador com ID " + id + " deletado com sucesso!");
+				System.out.println("\nLutador com ID " + id + " deletado com sucesso!");
 			} else {
 				System.out.println("Nenhum lutador encontrado com o ID " + id);
 			}
@@ -89,7 +89,7 @@ public class LutadorDaoJDBC implements LutadorDao{
 			st.setInt(7, lutador.getId());
 			int linhasAfetadas = st.executeUpdate();
 			if(linhasAfetadas > 0) {
-				System.out.println("Lutador com o id " + lutador.getId() + " teve seus dados alterados");
+				System.out.println("\nLutador com o id " + lutador.getId() + " teve seus dados alterados");
 			}
 		} catch(SQLException e) {
 			throw new DbException(e.getMessage());
